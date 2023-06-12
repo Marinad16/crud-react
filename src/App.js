@@ -9,8 +9,11 @@ import PostForm from "./components/postForm/PostForm";
 import PostList from "./components/postList/PostList";
 
 function App() {
+    const initState = {id: "", title: "", body: ""};
     const [open, setOpen] = useState(false);
     const [posts, setPosts] = useState([]);
+    const [newPost, setNewPost] = useState(initState);
+    const [editing, setEditing] = useState(false);
 
     useEffect(() => {
         PostService.getPosts().then((data) => {
@@ -27,8 +30,8 @@ function App() {
             <ToastContainer/>
             <h1>CRUD</h1>
             <Button variant="contained" onClick={handleClickOpen}>Add post</Button>
-            <PostForm setPosts={setPosts} open={open} setOpen={setOpen}/>
-            <PostList posts={posts}/>
+            <PostForm setPosts={setPosts} open={open} setOpen={setOpen} editing={editing} setEditing={setEditing} setNewPost={setNewPost} newPost={newPost} initState={initState}/>
+            <PostList posts={posts} setOpen={setOpen} setEditing={setEditing} setNewPost={setNewPost} update={setNewPost}/>
         </div>
     );
 }

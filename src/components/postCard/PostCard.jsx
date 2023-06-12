@@ -5,14 +5,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PostService from "../../services/PostsApi";
 import {toast} from "react-toastify";
 
-const PostCard = ({post}) => {
+const PostCard = ({post, setOpen, setEditing, update}) => {
     const handlePostDelete = (id) => {
         PostService.deletePost(id).then(() => toast.success("Deleted!"));
     }
 
-    const handlePostUpdate = (id) => {
-        PostService.editPost(id).then(() => toast.success("Updated!")).catch(() => toast.error("Error!"));
+    const handlePostUpdate = (id, title, body) => {
+        setOpen(true)
+        setEditing(true)
+        update({id: id, title: title, body: body})
     }
+
     return (
         <Card className="list__item">
             <CardContent className="list__item-content">
@@ -24,7 +27,7 @@ const PostCard = ({post}) => {
                 </Typography>
             </CardContent>
             <CardContent>
-                <IconButton aria-label="Example" onClick={() => handlePostUpdate(post.id)}>
+                <IconButton aria-label="Example" onClick={() => handlePostUpdate(post.id, post.title, post.body)}>
                     <EditIcon/>
                 </IconButton>
                 <IconButton aria-label="Example" onClick={() => handlePostDelete(post.id)}>

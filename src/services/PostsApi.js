@@ -21,8 +21,8 @@ class PostService {
         return response;
     }
 
-    static async editPost() {
-        const response = await axios.put(`${baseUrl}`)
+    static async editPost(id, body) {
+        const response = await axios.put(`${baseUrl}/${id}`, {body})
         return response;
     }
 }
